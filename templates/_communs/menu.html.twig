@@ -1,23 +1,33 @@
+{# EXERCICE: le lien déconnexion ne doit s'afficher que si on connecté. Les liens connexion et inscription ne doivent s'afficher si on est connecté #}
 <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">BiblioSF</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-            aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+    <div class="container-fluid"> 
+        <a class="navbar-brand" href="#">BiblioSF</a> 
+        <button class="navbar-toggler"
+            type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span> 
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+            {% if app.user %}
+                <li class="nav-item"> 
+                    <a class="nav-link" aria-current="page" href="{{ path('app_logout')}}">
+                    <i class="bi-box-arrow-left"></i>
+                    </a> 
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
+            {% else %}
+                <li class="nav-item"> 
+                    <a class="nav-link" aria-current="page" href="{{ path('app_login')}}">
+                        <i class="bi-sign-intersection"></i>
+                    </a> 
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        Test
+                <li class="nav-item"> 
+                    <a class="nav-link" aria-current="page" href="{{ path('app_register')}}">
+                        <i class="bi-box-arrow-right"></i>
+                    </a> 
+                </li>
+                <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false"> Test
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="{{ path('app_livre') }}">Liste des livres</a></li>
@@ -26,18 +36,56 @@
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        <li>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </li>
                     </ul>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled">Disabled</a>
+                {# is_granted est une function sui renvoie true si l'utilisateur connecté à le role passé en argument #}
+                {% if is_granted("ROLE_ADMIN") %}
+
+                <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false"> Auteur
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{{ path('app_admin_auteur_index') }}">Liste</a></li>
+                        <li><a class="dropdown-item" href="{{ path('app_admin_auteur_new') }}">Ajouter</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false"> Livres
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{{ path('app_admin_livre_index') }}">Liste</a></li>
+                        <li><a class="dropdown-item" href="{{ path('app_admin_livre_new') }}">Ajouter</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false"> Genres
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{{ path('app_admin_genre_index') }}">Liste</a></li>
+                        <li><a class="dropdown-item" href="{{ path('app_admin_genre_new') }}">Ajouter</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false"> Abonnées
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{{ path('app_admin_abonne_index') }}">Liste</a></li>
+                        <li><a class="dropdown-item" href="{{ path('app_admin_abonne_new') }}">Ajouter</a></li>
+                    </ul>
+                </li>
+
+                {% endif %}
+
+                <li class="nav-item"> 
+                    <a class="nav-link disabled">Disabled</a> 
                 </li>
             </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
+            <form class="d-flex" role="search"> <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"> 
+                <button class="btn btn-outline-success" type="submit">Search</button> 
             </form>
         </div>
     </div>
 </nav>
-
